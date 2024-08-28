@@ -356,5 +356,5 @@ window.onload = function () {
             init();
             output("");
         }
-    }, 50);
+    }, 15);
 };
