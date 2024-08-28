@@ -315,7 +315,7 @@ function hideSnake() {
 }
 
 var welcomeStr =
-    "Welcome! I’m Andrew Bond, an electrical engineering student seeking to leverage my skills in analog and digital circuits, programming, and problem solving to learn what it really means to be an electrical engineer. I'm an outstanding student with a 4.0 GPA, have strong written and interpersonal communication skills, and thrive in a team setting.\n\nType 'help' to see available commands, 'exit' to visit the rest of the site, 'cat' to view some of this site's source code, or 'snake' to waste some time.";
+    "Welcome! I'm Andy Bond, an embedded software engineer.\n\nType 'help' for available commands, 'exit' to enter the site, or 'snake' to waste some time."
 
 var introInterval;
 

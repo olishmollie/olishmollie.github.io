@@ -4,7 +4,7 @@ layout: jsh
 
 <html>
 <head>
-<title>AJ Bond</title>
+<title>Andy Bond</title>
 </head>
 <body>
 <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">

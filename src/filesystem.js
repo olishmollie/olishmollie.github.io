@@ -1694,7 +1694,7 @@ layout: jsh
 
 <html>
 <head>
-<title>AJ Bond</title>
+<title>Andy Bond</title>
 </head>
 <body>
 <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
@@ -2242,7 +2242,7 @@ function hideSnake() {
 }
 
 var welcomeStr =
-    "(Press any key to continue.) Welcome! I'm AJ Bond, an electrical engineering student seeking to begin a career where hardware meets software. I’ve excelled in classes including Computer Architecture, Digital Design, Circuits, Statistics, Data Structures & Algorithms, Electromagnetics, and Systems Programming. I also have strong communication skills and an excellent academic record.\n\nI'm ready to apply my energy and intellect to challenging problems, learn as much as possible, and love every bit. Type \`help\` for available commands, or type \`exit\` to view the rest of the site.\n\nHint: Use \`cat\` to view the some of the source code for the site.";
+    "Welcome! I'm Andy Bond, an embedded software engineer.\n\nType 'help' for available commands, 'exit' to enter the site, or 'snake' to waste some time."
 
 var introInterval;
 
