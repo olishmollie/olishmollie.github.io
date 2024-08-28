@@ -130,6 +130,7 @@ var validCommands = [
     "ls",
     "open",
     "snake",
+    "resume",
 ];
 
 function exec(input) {
@@ -160,11 +161,17 @@ function exec(input) {
             } else if (command === "snake") {
                 showSnake();
                 game.play();
+            } else if (command === "resume") {
+                showResume();
             }
         } else {
             output("command not found: " + command);
         }
     }
+}
+
+function showResume() {
+   window.open("/Andy_Bond.pdf", '_blank').focus(); 
 }
 
 function findFile(filename, dir = fs) {
@@ -315,7 +322,7 @@ function hideSnake() {
 }
 
 var welcomeStr =
-    "Welcome! I'm Andy Bond, an embedded software engineer.\n\nType 'help' for available commands, 'exit' to enter the site, or 'snake' to waste some time."
+    "Welcome! I'm Andy Bond, an embedded software engineer.\n\nType 'help' for available commands, 'resume' to view my resume, or 'snake' to waste some time."
 
 var introInterval;
 
