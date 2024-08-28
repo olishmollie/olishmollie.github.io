@@ -162,7 +162,7 @@ function exec(input) {
                 showSnake();
                 game.play();
             } else if (command === "resume") {
-                showResume();
+                window.location.href = "/Andy_Bond.pdf";
             }
         } else {
             output("command not found: " + command);
@@ -247,6 +247,7 @@ help - Print this message.
 ls - List files in a directory.
 open - Jump to a page in the site.
 snake - Arrow keys to move, 'q' to quit.
+resume - View my resume.
 `;
     output(helpStr);
 }
@@ -322,7 +323,7 @@ function hideSnake() {
 }
 
 var welcomeStr =
-    "Welcome! I'm Andy Bond, an embedded software engineer.\n\nType 'help' for available commands, 'resume' to view my resume, or 'snake' to waste some time."
+    "Welcome! I'm Andy Bond, a software engineer.\n\nType 'help' for available commands, 'exit' to enter the site, 'resume' to view my resume, or 'snake' to waste some time."
 
 var introInterval;
 

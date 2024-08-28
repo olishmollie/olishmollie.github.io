@@ -1,14 +1,10 @@
 var fs = [
-    {
-        name: "~",
-        files: [
-            {
-                name: "notes",
-                parent: "~",
-                files: [
-                    {
-                        name: "phasors.md",
-                        data: `---
+{ name: "~", files: [
+{ name: "notes",
+parent: "~",
+files: [
+{ name: "phasors.md",
+data: `---
 layout: page
 title:  "Phasors"
 usemathjax: true
@@ -16,15 +12,14 @@ usemathjax: true
 
 # Motivation
 
-Sometimes dealing with sinusoidal signals in the time domain can be a hassle. Consider finding the steady-state current of the circuit below, with $$v(t)=V_0\cos(\omega{}t+\phi)$$.
-
+Sometimes dealing with sinusoidal signals in the time domain can be a hassle. Consider finding the steady-state current of the circuit below, with $$v(t)=V_0
 <p align="center">
     <img src="/rlc_circuit.png" alt="RLC Circuit"/>
 </p>
 
 From circuit theory, we know that the capacitor current is proportional to the derivative of the voltage, while the current across the inductor is the integral of the voltage. Therefore, using Kirchoff's voltage law,
 
-$$v(t)=\frac{1}{C}\int_{-\infty}^{t}i(x)dx+L\frac{\text{d}i(t)}{\text{d}t}+Ri(t)$$
+$$v(t)=rac{1}{C}\int_{-\infty}^{t}i(x)dx+Lrac{	ext{d}i(t)}{	ext{d}t}+Ri(t)$$
 
 I don't know about you, but that's not an integro-differential equation I can solve very easily. Luckily, thanks to [Charles Proteus Steinmetz](https://en.wikipedia.org/wiki/Charles_Proteus_Steinmetz), there's a better way.
 
@@ -33,89 +28,78 @@ I don't know about you, but that's not an integro-differential equation I can so
 If one were trying to find a simpler way to solve our problem, one might begin with the fact that this cicrcuit's input frequency equals its output frequency. We might therefore seek a time-independent quantity that carries the the magnitude and phase of the signal to simplify the analysis. A phasor is just such a quantity, and we'll use Euler's indentity to find it. We begin by recognizing that our cosine function is in fact the real part of a complex exponential.
 
 $$
-\begin{align*}
-v(t)&=\mathcal{Re}\{V_0e^{j(\omega{}t+\phi)}\}\\
-&=\mathcal{Re}\{V_0e^{j\omega{}t}e^{j\phi}\}\\
-\end{align*}
+egin{align*}
+v(t)&=\mathcal{Re}\{V_0e^{j(\omega{}t+\phi)}\}\
+&=\mathcal{Re}\{V_0e^{j\omega{}t}e^{j\phi}\}\
+nd{align*}
 $$
 
 Ignoring the time-dependent exponential, the phasor becomes $$V_0e^{j\phi}$$. The _phasor transform_ is carried out by representing a sinusoidal signal with its phasor, or
 
-$$\tilde{V}=V_0e^{j\phi}=\mathcal{P}\{V_0\cos(\omega{}t+\phi)\}$$
-
+$$	ilde{V}=V_0e^{j\phi}=\mathcal{P}\{V_0
 But why is it useful? To find out, let's take each element in our circuit and find its $$VI$$ relationship in phasor form. Beginning with the resistor, we start with Ohm's Law and perfrom the phase transform to both sides to obtain
 
 $$
-\begin{align*}
-v(t)&=RI_0\cos(\omega{}t+\phi)\\
-&=\mathcal{Re}\{RI_0\cos(\omega{}t+\phi)\}\\
-\tilde{V}&=R\tilde{I}
-\end{align*}
+egin{align*}
+v(t)&=RI_0&=\mathcal{Re}\{RI_0	ilde{V}&=R	ilde{I}
+nd{align*}
 $$
 
 Next, let's perform similar steps with the inductor.
 
 $$
-\begin{align*}
-v(t)&=L\frac{\text{d}}{\text{d}t}I_0\cos(\omega{}t+\phi)\\
-&=-\omega{}LI_0\sin(\omega{}t+\phi)\\
-&=-\omega{}LI_0\cos(\omega{}t+\phi-\pi/2)\\
-&=-\omega{}L\mathcal{Re}\{I_0\cos(\omega{}t+\phi-\pi/2)\}\\
-&=-\omega{}L\tilde{I}e^{-j\pi/2}\\
-\tilde{V}&=j\omega{}L\tilde{I}
-\end{align*}
+egin{align*}
+v(t)&=Lrac{	ext{d}}{	ext{d}t}I_0&=-\omega{}LI_0\sin(\omega{}t+\phi)\
+&=-\omega{}LI_0&=-\omega{}L\mathcal{Re}\{I_0&=-\omega{}L	ilde{I}e^{-j\pi/2}\
+	ilde{V}&=j\omega{}L	ilde{I}
+nd{align*}
 $$
 
 
 where we have used the identity $$e^{-j\pi/2}=-j$$. Finally, we address the capacitor.
 
 $$
-\begin{align*}
-v(t)&=\frac{1}{C}\int_{-\infty}^{t}I_0\cos(\omega{}t+\phi)dx\\
-&=\frac{1}{\omega{}C}I_0\sin(\omega{}t+\phi)\\
-&=\frac{1}{\omega{}C}I_0\cos(\omega{}t+\phi-pi/2)\\
-&=\frac{1}{\omega{}C}\tilde{I}e^{-j\pi/2}\\
-&=\frac{-j}{\omega{}C}\tilde{I}\\
-\tilde{V}&=\frac{1}{j\omega{}C}\tilde{I}
-\end{align*}
+egin{align*}
+v(t)&=rac{1}{C}\int_{-\infty}^{t}I_0&=rac{1}{\omega{}C}I_0\sin(\omega{}t+\phi)\
+&=rac{1}{\omega{}C}I_0&=rac{1}{\omega{}C}	ilde{I}e^{-j\pi/2}\
+&=rac{-j}{\omega{}C}	ilde{I}\
+	ilde{V}&=rac{1}{j\omega{}C}	ilde{I}
+nd{align*}
 $$
 
-In the phasor representation, also known as the _frequency domain_, we define the concept of impedance to current flow, $$Z=\tilde{V}/\tilde{I}$$, for each of the above elements as
+In the phasor representation, also known as the _frequency domain_, we define the concept of impedance to current flow, $$Z=	ilde{V}/	ilde{I}$$, for each of the above elements as
 
-$$Z_R=R\qquad{}Z_L=j\omega{}L\qquad{}Z_C=\frac{1}{j\omega{}C}$$
+$$Z_R=R\qquad{}Z_L=j\omega{}L\qquad{}Z_C=rac{1}{j\omega{}C}$$
 
 # Method
 
 Let's revisit our original problem, this time replacing all the time-dependent quantities with phasors.
 
 $$
-\begin{align*}
-\tilde{V}&=\frac{1}{j\omega{}C}\tilde{I}+j\omega{}L\tilde{I}+R\tilde{I}\\
-&=\tilde{I}(\frac{1}{j\omega{}C}+j\omega{}L+R)\\
-\end{align*}
+egin{align*}
+	ilde{V}&=rac{1}{j\omega{}C}	ilde{I}+j\omega{}L	ilde{I}+R	ilde{I}\
+&=	ilde{I}(rac{1}{j\omega{}C}+j\omega{}L+R)\
+nd{align*}
 $$
 
 Solving for current,
 
 $$
-\begin{align*}
-\tilde{I}&=\frac{\tilde{V}}{R+j(\omega{}L-\frac{1}{\omega{}C})}\\
-&=\frac{\tilde{V}e^{-j\theta}}{\sqrt{R^2+(\omega{}L-\frac{1}{\omega{}C})^2}}\tag{$\theta=\tan^{-1}(\frac{\omega{}L-\frac{1}{\omega{}C}}{R})$}\\
-\end{align*}
+egin{align*}
+	ilde{I}&=rac{	ilde{V}}{R+j(\omega{}L-rac{1}{\omega{}C})}\
+&=rac{	ilde{V}e^{-j	heta}}{\sqrt{R^2+(\omega{}L-rac{1}{\omega{}C})^2}}	ag{$	heta=	an^{-1}(rac{\omega{}L-rac{1}{\omega{}C}}{R})$}\
+nd{align*}
 $$
 
 Now we can convert these quantities back into the time domain for the final solution.
 
 $$
-\begin{align*}
-i(t)&=\mathcal{Re}\{\frac{\tilde{V}e^{-j\theta}}{\sqrt{R^2+(\omega{}L-\frac{1}{\omega{}C})^2}}e^{j\omega{}t}\}\\
-&=\frac{V_0}{\sqrt{R^2+(\omega{}L-\frac{1}{\omega{}C})^2}}\cos(\omega{}t-\theta)\\
-\end{align*}
-`,
-                    },
-                    {
-                        name: "testbench.md",
-                        data: `---
+egin{align*}
+i(t)&=\mathcal{Re}\{rac{	ilde{V}e^{-j	heta}}{\sqrt{R^2+(\omega{}L-rac{1}{\omega{}C})^2}}e^{j\omega{}t}\}\
+&=rac{V_0}{\sqrt{R^2+(\omega{}L-rac{1}{\omega{}C})^2}}nd{align*}
+`},
+{ name: "testbench.md",
+data: `---
 layout: page
 title: Writing a Verilog Test Bench
 ---
@@ -194,7 +178,7 @@ We could pretty easily just hardcode all the inputs and expected outputs, but th
       if(actual == expected) begin
         $display("%s passed", name);
         passCount += 1;
-      end else $display("%s failed: output: %x\texpected: %x", name, actual, expected);
+      end else $display("%s failed: output: %x	expected: %x", name, actual, expected);
    endtask
 \`\`\`
 
@@ -260,16 +244,14 @@ Now for the meat of the test bench. In an \`initial\` block, we need to initiali
 endmodule
 \`\`\`
 
-`,
-                    },
-                    {
-                        name: "transmission-lines.md",
-                        data: `---
+`},
+{ name: "transmission-lines.md",
+data: `---
 layout: page
 title: Wave Propagation On a Transmission Line
 usemathjax: true
 ---
-If an electrical line is long enough ($$\frac{l}{\lambda}\gtrapprox{}0.01$$), the effects of the length must be taken into account. We call such lines _TEM transmission lines_{: style="color: red;"}, and they consist of two conductors separated by a dielectric material (for example, a coaxial cable).
+If an electrical line is long enough ($$rac{l}{\lambda}\gtrapprox{}0.01$$), the effects of the length must be taken into account. We call such lines _TEM transmission lines_{: style="color: red;"}, and they consist of two conductors separated by a dielectric material (for example, a coaxial cable).
 
 # The Telegrapher's Equations
 
@@ -289,37 +271,37 @@ The circuit parameters shown depend on the geometry of the transmission line and
 These parameters depend on the geometry and the materials of the line itself. KVL around the outer loop obtains
 
 $$
-\begin{align*}
-v(z,t)-v(z+\Delta{}z,t)=R'\Delta{}zi(z,t)+L'\Delta{}z\pderiv{i(z,t)}{t}\\
--\frac{v(z+\Delta{}z,t)-v(z,t)}{\Delta{}z}=R'i(z,t)+L'\pderiv{i(z,t)}{t}
-\end{align*}
+egin{align*}
+v(z,t)-v(z+\Delta{}z,t)=R'\Delta{}zi(z,t)+L'\Delta{}z\pderiv{i(z,t)}{t}\
+-rac{v(z+\Delta{}z,t)-v(z,t)}{\Delta{}z}=R'i(z,t)+L'\pderiv{i(z,t)}{t}
+nd{align*}
 $$
 
 Letting $$n$$ grow to infinity, the equation becomes the first of the Telegrapher's Equations, describing voltage.
 
 $$
-\begin{equation}
+egin{equation}
 -\pderiv{v(z,t)}{z}=R'i(z,t)+L'\pderiv{i(z,t)}{t}
 \label{eq:telegraphers_voltage}
-\end{equation}
+nd{equation}
 $$
 
 A similar process with KCL down the shunt gives
 
 $$
-\begin{align*}
-i(z,t)-i(z+\Delta{}z,t)&=G'\Delta{}zv(z,t)+C'\pderiv{v(z,t)}{t}\\
--\frac{[i(z+\Delta{}z,t)-i(z,t)]}{\Delta{}z}&=G'v(z,t)+C'\pderiv{v(z,t)}{t}\\
-\end{align*}
+egin{align*}
+i(z,t)-i(z+\Delta{}z,t)&=G'\Delta{}zv(z,t)+C'\pderiv{v(z,t)}{t}\
+-rac{[i(z+\Delta{}z,t)-i(z,t)]}{\Delta{}z}&=G'v(z,t)+C'\pderiv{v(z,t)}{t}\
+nd{align*}
 $$
 
 Again letting $$n$$ grow infinitely large yields the second Telegrapher's Equation, describing current.
 
 $$
-\begin{equation}
+egin{equation}
 -\pderiv{i(z,t)}{z}=G'v(z,t)+C'\pderiv{v(z,t)}{t}
 \label{eq:telegraphers_current}
-\end{equation}
+nd{equation}
 $$
 
 # Wave Propagation
@@ -327,55 +309,55 @@ $$
 One fruitful avenue of analysis is the behavior of sinusoidal steady-state voltages and currents along transmission lines. To that end, we use the phasor form of the Telegrapher's Equations.
 
 $$
-\begin{equation}
--\deriv{\tilde{V}(z)}{z}=\tilde{I}(z)(R'+j\omega{}L')
+egin{equation}
+-\deriv{	ilde{V}(z)}{z}=	ilde{I}(z)(R'+j\omega{}L')
 \label{eq:telegraphers_voltage_phasor}
-\end{equation}
+nd{equation}
 $$
 
 $$
-\begin{equation}
--\deriv{\tilde{I}(z)}{z}=\tilde{V}(z)(G'+j\omega{}C')
+egin{equation}
+-\deriv{	ilde{I}(z)}{z}=	ilde{V}(z)(G'+j\omega{}C')
 \label{eq:telegraphers_current_phasor}
-\end{equation}
+nd{equation}
 $$
 
-Taking the derivative with respect to $$z$$ of both sides of Eq. (\ref{eq:telegraphers_voltage_phasor}) and substituting in Eq. (\ref{eq:telegraphers_current_phasor}) for current, we get
+Taking the derivative with respect to $$z$$ of both sides of Eq. (
+ef{eq:telegraphers_voltage_phasor}) and substituting in Eq. (
+ef{eq:telegraphers_current_phasor}) for current, we get
 
-$$-\frac{\partial{}^2\tilde{V}(z)}{\partial{}z^2}=-\tilde{V}(z)(G'+j\omega{}C')(R'+j\omega{}L')$$
+$$-rac{\partial{}^2	ilde{V}(z)}{\partial{}z^2}=-	ilde{V}(z)(G'+j\omega{}C')(R'+j\omega{}L')$$
 
 A little bit of rearrangement yields a wave equation
 
 $$
-\begin{equation}
-\frac{\partial{}^2\tilde{V}(z)}{\partial{}z^2}-\gamma^2\tilde{V}(z)=0
+egin{equation}
+rac{\partial{}^2	ilde{V}(z)}{\partial{}z^2}-\gamma^2	ilde{V}(z)=0
 \label{eq:voltage_wave}
-\end{equation}
+nd{equation}
 $$
 
-where $$\gamma=\sqrt{(R'+j\omega{}L')(G'+j\omega{}C')}=\alpha+j\beta$$ is defined as the _propagation constant_{: style="color: red;"} of the transmission line. It consists of a real part, an _attenuation constant_{: style="color: red;"} $$\alpha$$, and a _phase constant_{: style="color: red;"} $$\beta$$. A similar procedure obtains the corresponding current wave equation.
+where $$\gamma=\sqrt{(R'+j\omega{}L')(G'+j\omega{}C')}=lpha+jeta$$ is defined as the _propagation constant_{: style="color: red;"} of the transmission line. It consists of a real part, an _attenuation constant_{: style="color: red;"} $$lpha$$, and a _phase constant_{: style="color: red;"} $$eta$$. A similar procedure obtains the corresponding current wave equation.
 
 $$
-\begin{equation}
-\frac{\partial{}^2\tilde{I}(z)}{\partial{}z^2}-\gamma^2\tilde{I}(z)=0
+egin{equation}
+rac{\partial{}^2	ilde{I}(z)}{\partial{}z^2}-\gamma^2	ilde{I}(z)=0
 \label{eq:current_wave}
-\end{equation}
+nd{equation}
 $$
 
 The general solution of these equations is well known, and takes the form
 
 $$
-\begin{equation}
-\color{blue}{\tilde{V}(z)=V_0^+e^{-\gamma{}z}+V_0^-e^{\gamma{}z}}
+egin{equation}
 \label{eq:voltage_general_solution}
-\end{equation}
+nd{equation}
 $$
 
 $$
-\begin{equation}
+egin{equation}
 \label{eq:current_general_solution}
-\color{blue}{\tilde{I}(z)=I_0^+e^{-\gamma{}z}+I_0^-e^{\gamma{}z}}
-\end{equation}
+nd{equation}
 $$
 
 If we return to the time domain, it is clear these solutions describe the sum of waves traveling in opposing directions, a phenomena known as a _standing wave_{: style="color: red;"}, whose forward propagating waves have amplitudes $$V_0^+$$ and $$I_0^+$$ and whose backward propagating waves have amplitudes $$V_0^-$$ and $$I_0^-$$.
@@ -384,39 +366,41 @@ If we return to the time domain, it is clear these solutions describe the sum of
 
 We now have equations that describe the behavior of voltage and current waves on a transmission line. But we still have four unknown amplitudes.
 
-We can reduce the number of unknowns to two by relating the voltage and current amplitudes. To do this, we substitute Eq. (\ref{eq:voltage_general_solution}) into Eq. (\ref{eq:telegraphers_voltage_phasor}) and solve for $$\tilde{I}(z)$$.
+We can reduce the number of unknowns to two by relating the voltage and current amplitudes. To do this, we substitute Eq. (
+ef{eq:voltage_general_solution}) into Eq. (
+ef{eq:telegraphers_voltage_phasor}) and solve for $$	ilde{I}(z)$$.
 
 $$
-\begin{align*}
-\tilde{I}(z)&=I_0^+e^{-j\gamma}+I_0^-e^{j\gamma}\\
-&=\frac{\gamma}{R'+j\omega{}L'}(V_0^+e^{-\gamma{}z}-V_0^-e^{\gamma{}z})\\
-\end{align*}
+egin{align*}
+	ilde{I}(z)&=I_0^+e^{-j\gamma}+I_0^-e^{j\gamma}\
+&=rac{\gamma}{R'+j\omega{}L'}(V_0^+e^{-\gamma{}z}-V_0^-e^{\gamma{}z})\
+nd{align*}
 $$
 
 Comparing the amplitudes of voltage and current, it is clear that
 
 $$
-\begin{equation}
-V_0^+=\frac{I_0^+}{Z_0}\qquad{}V_0^-=-\frac{I_0^-}{Z_0}
-\end{equation}
+egin{equation}
+V_0^+=rac{I_0^+}{Z_0}\qquad{}V_0^-=-rac{I_0^-}{Z_0}
+nd{equation}
 $$
 
 where $$Z_0$$ is defined as the _characteristic impedance_{: style="color: red;"} and given by
 
 $$
-\begin{equation}
-Z_0=\frac{R'+j\omega{}L'}{\gamma}=\sqrt{\frac{R'+j\omega{}L'}{G'+j\omega{}C'}}
+egin{equation}
+Z_0=rac{R'+j\omega{}L'}{\gamma}=\sqrt{rac{R'+j\omega{}L'}{G'+j\omega{}C'}}
 \label{eq:characteristic_impedance_general}
-\end{equation}
+nd{equation}
 $$
 
-We can now define Eq. (\ref{eq:current_general_solution}) in terms of the characteristic impedance.
+We can now define Eq. (
+ef{eq:current_general_solution}) in terms of the characteristic impedance.
 
 $$
-\begin{equation}
-\color{blue}{\tilde{I}(z)=\frac{V_0^+}{Z_0}e^{-\gamma{}z}-\frac{V_0^-}{Z_0}e^{\gamma{}z}}
+egin{equation}
 \label{eq:current_solution_characteristic_impedance}
-\end{equation}
+nd{equation}
 $$
 
 # The Lossless Case
@@ -424,54 +408,54 @@ $$
 A well designed transmission line uses conductors with high conductivity and dielectrics with high resistivity, making $$R'$$ and $$G'$$ very small. In the ideal case, $$R'=G'=0$$ and the line is considered "lossless". The propagation constant of such a line reduces to
 
 $$
-\begin{equation}
-\gamma=\alpha+j\beta=j\omega{}\sqrt{L'C'}
-\end{equation}
+egin{equation}
+\gamma=lpha+jeta=j\omega{}\sqrt{L'C'}
+nd{equation}
 $$
 
-which implies that $$\alpha=0$$ and $$\beta=\omega{}\sqrt{L'C'}$$, or $$\gamma=j\beta$$. Thus Eqs. (\ref{eq:voltage_general_solution}) and (\ref{eq:current_solution_characteristic_impedance}) reduce to
+which implies that $$lpha=0$$ and $$eta=\omega{}\sqrt{L'C'}$$, or $$\gamma=jeta$$. Thus Eqs. (
+ef{eq:voltage_general_solution}) and (
+ef{eq:current_solution_characteristic_impedance}) reduce to
 
 $$
-\begin{equation}
-\color{blue}{\tilde{V}(z)=V_0^+e^{-j\beta{}z}+V_0^-e^{j\beta{}z}}
+egin{equation}
 \label{eq:voltage_wave_lossless}
-\end{equation}
+nd{equation}
 $$
 
 $$
-\begin{equation}
-\color{blue}{\tilde{I}(z)=\frac{V_0^+}{Z_0}e^{-j\beta{}z}-\frac{V_0^-}{Z_0}e^{j\beta{}z}}
+egin{equation}
 \label{eq:current_wave_lossless}
-\end{equation}
+nd{equation}
 $$
 
 Similarly, the characteristic impedance of a lossless line is given by
 
 $$
-\begin{equation}
-Z_0=\sqrt{\frac{L'}{C'}}
+egin{equation}
+Z_0=\sqrt{rac{L'}{C'}}
 \label{eq:characteristic_impedance_lossless}
-\end{equation}
+nd{equation}
 $$
 
-The fact that a wave's velocity is given by $$u_p=\frac{\omega}{\beta}$$ implies that, in the case of a lossless line, the phase velocity is given by
+The fact that a wave's velocity is given by $$u_p=rac{\omega}{eta}$$ implies that, in the case of a lossless line, the phase velocity is given by
 
-$$u_p=\frac{\omega}{\beta}=\frac{\omega}{\omega{}\sqrt{L'C'}}=\frac{1}{\sqrt{L'C'}}$$
+$$u_p=rac{\omega}{eta}=rac{\omega}{\omega{}\sqrt{L'C'}}=rac{1}{\sqrt{L'C'}}$$
 
 Thus, the velocity of the wave is independent of its frequency. In this way, dispersion (where different frequencies that make up a signal travel at different speeds and therefore arrive at different times, causing distortion) is avoided.
 
-Interestingly, the condition known as the _Heaviside Condition_{: style="color: red;"}, satisfied if $$\frac{G'}{C'}=\frac{R'}{L'}$$, also eliminates dispersion. Given the Heaviside Condtion,
+Interestingly, the condition known as the _Heaviside Condition_{: style="color: red;"}, satisfied if $$rac{G'}{C'}=rac{R'}{L'}$$, also eliminates dispersion. Given the Heaviside Condtion,
 
 $$
-\begin{align*}
-\gamma&=\sqrt{(R'+j\omega{}L')(G'+j\omega{}C')}\\
-&=\sqrt{L'C'(\frac{R'}{L'}+j\omega{})(\frac{G'}{C'}+j\omega{})}\\
-&=\sqrt{R'G'}+j\omega{}\sqrt{L'C'}\\
-&=\alpha+j\beta\\
-\end{align*}
+egin{align*}
+\gamma&=\sqrt{(R'+j\omega{}L')(G'+j\omega{}C')}\
+&=\sqrt{L'C'(rac{R'}{L'}+j\omega{})(rac{G'}{C'}+j\omega{})}\
+&=\sqrt{R'G'}+j\omega{}\sqrt{L'C'}\
+&=lpha+jeta\
+nd{align*}
 $$
 
-Again, the velocity $$u_p=\frac{\omega}{\beta}$$ does not depend on frequency, and the the line is known as "distortionless".
+Again, the velocity $$u_p=rac{\omega}{eta}$$ does not depend on frequency, and the the line is known as "distortionless".
 
 # Reflection Coefficient
 
@@ -484,88 +468,89 @@ Limiting ourselves to the lossless case, we apply a boundary condition at the lo
 
 With this in mind, the impedance at the load is
 
-$$Z_L=\frac{\tilde{V}(0)}{\tilde{I}(0)}=Z_0\frac{V_0^++V_0^-}{V_0^+-V_0^-}$$
+$$Z_L=rac{	ilde{V}(0)}{	ilde{I}(0)}=Z_0rac{V_0^++V_0^-}{V_0^+-V_0^-}$$
 
 Solving for the ratio of the amplitudes of the incident and reflected waves yields the the _voltage reflection coefficient_{: style="color: red;"} at the load, defined as
 
 $$
-\begin{equation}
-\Gamma_L=\frac{V_0^-}{V_0^+}=\frac{Z_L-Z_0}{Z_L+Z_0}
+egin{equation}
+\Gamma_L=rac{V_0^-}{V_0^+}=rac{Z_L-Z_0}{Z_L+Z_0}
 \label{eq:reflection_coefficient_load}
-\end{equation}
+nd{equation}
 $$
 
-Since $$Z_L$$ is in general a complex number, $$\Gamma_L=\vert{}\Gamma_L\vert{}e^{j\theta_{\Gamma}}$$. If a load is _matched_{: style="color:red;"}, $$Z_L=Z_0$$ and $$\Gamma_L=0$$; there is no reflection on the line. If $$Z_L=0$$ (a short circuit), $$\Gamma=-1$$. If $$Z_L=\infty$$ (an open circuit), then $$\Gamma=1$$.
+Since $$Z_L$$ is in general a complex number, $$\Gamma_L=ert{}\Gamma_Lert{}e^{j	heta_{\Gamma}}$$. If a load is _matched_{: style="color:red;"}, $$Z_L=Z_0$$ and $$\Gamma_L=0$$; there is no reflection on the line. If $$Z_L=0$$ (a short circuit), $$\Gamma=-1$$. If $$Z_L=\infty$$ (an open circuit), then $$\Gamma=1$$.
 
-Using Eqs. (\ref{eq:voltage_wave_lossless}) and (\ref{eq:reflection_coefficient_load}), we can now define our wave equations with just one unknown, namely $$V_0^+$$.
+Using Eqs. (
+ef{eq:voltage_wave_lossless}) and (
+ef{eq:reflection_coefficient_load}), we can now define our wave equations with just one unknown, namely $$V_0^+$$.
 
 $$
-\begin{equation}
-\color{blue}{\tilde{V}(z)=V_0^+(e^{-j\beta{}z}+\Gamma_L{}e^{j\beta{}z})}
+egin{equation}
 \label{eq:voltage_wave_gamma}
-\end{equation}
+nd{equation}
 $$
 
 $$
-\begin{equation}
-\color{blue}{\tilde{I}(z)=\frac{V_0^+}{Z_0}(e^{-j\beta{}z}-\Gamma_L{}e^{j\beta{}z})}
+egin{equation}
 \label{eq:current_wave_gamma}
-\end{equation}
+nd{equation}
 $$
 
 # The Last Unknown
 
-In order to solve for $$V_0^+$$, we need to apply another boundary condition, this time at the source. Taking the _wave impedance_{: style="color: red;"}, or the impedance at a point $$z$$ on the line, as the ratio of Eqs. (\ref{eq:voltage_wave_gamma}) and (\ref{eq:current_wave_gamma}), we have
+In order to solve for $$V_0^+$$, we need to apply another boundary condition, this time at the source. Taking the _wave impedance_{: style="color: red;"}, or the impedance at a point $$z$$ on the line, as the ratio of Eqs. (
+ef{eq:voltage_wave_gamma}) and (
+ef{eq:current_wave_gamma}), we have
 
 $$
-\begin{align*}
-Z(z)&=\frac{\tilde{V}(z)}{\tilde{I}(z)}\\
-&=Z_0\frac{e^{-j\beta{}z}(1+\Gamma_L{}e^{j2\beta{}z})}{e^{-j\beta{}z}(1-\Gamma_L{}e^{j2\beta{}z})}\\
-&=Z_0\frac{1+\Gamma_z}{1-\Gamma_z}\\
-\end{align*}
+egin{align*}
+Z(z)&=rac{	ilde{V}(z)}{	ilde{I}(z)}\
+&=Z_0rac{e^{-jeta{}z}(1+\Gamma_L{}e^{j2eta{}z})}{e^{-jeta{}z}(1-\Gamma_L{}e^{j2eta{}z})}\
+&=Z_0rac{1+\Gamma_z}{1-\Gamma_z}\
+nd{align*}
 $$
 
-where $$\Gamma_z=\Gamma_Le^{j2\beta{}z}$$, which is $$\Gamma_L$$ phase shifted by $$2\beta{}z$$ toward the source. The _input impedance_{: style="color:red;"}, or the impedance of a line of length $$l$$ at $$z=-l$$, is therefore
+where $$\Gamma_z=\Gamma_Le^{j2eta{}z}$$, which is $$\Gamma_L$$ phase shifted by $$2eta{}z$$ toward the source. The _input impedance_{: style="color:red;"}, or the impedance of a line of length $$l$$ at $$z=-l$$, is therefore
 
-$$Z_{in}=Z(-l)=Z_0\frac{1+\Gamma_L{}e^{-j2\beta{}l}}{1-\Gamma_L{}e^{-j2\beta{}l}}$$
+$$Z_{in}=Z(-l)=Z_0rac{1+\Gamma_L{}e^{-j2eta{}l}}{1-\Gamma_L{}e^{-j2eta{}l}}$$
 
 The input impedance and the source impedance (as shown in Figure 2) therefore form a voltage divider, expressed by
 
 $$
-\begin{equation}
-\tilde{V}(l)=\frac{\tilde{V}_GZ_{in}}{Z_G+Z_{in}}
+egin{equation}
+	ilde{V}(l)=rac{	ilde{V}_GZ_{in}}{Z_G+Z_{in}}
 \label{eq:input_voltage}
-\end{equation}
+nd{equation}
 $$
 
-The voltage at $$z=-l$$ can also be expressed through Eq. (\ref{eq:voltage_wave_gamma}), and when combined with Eq. (\ref{eq:input_voltage}), give us an expression for $$V_0^+$$.
+The voltage at $$z=-l$$ can also be expressed through Eq. (
+ef{eq:voltage_wave_gamma}), and when combined with Eq. (
+ef{eq:input_voltage}), give us an expression for $$V_0^+$$.
 
 $$
-\begin{equation}
-V_0^+=(\frac{\tilde{V}_GZ_{in}}{Z_G+Z_{in}})(\frac{1}{e^{j\beta{}l}+\Gamma_Le^{-j\beta{}l}})
+egin{equation}
+V_0^+=(rac{	ilde{V}_GZ_{in}}{Z_G+Z_{in}})(rac{1}{e^{jeta{}l}+\Gamma_Le^{-jeta{}l}})
 \label{eq:incident_wave_amplitude}
-\end{equation}
+nd{equation}
 $$
 
-Substituting this equation into Eq. (\ref{eq:voltage_wave_gamma}) yields the final solution to the voltage and current waves along a transmission line of length $$l$$, depending only on $$l$$ and the parameters of the line $$R'$$, $$G'$$, $$L'$$, and $$C'$$.
+Substituting this equation into Eq. (
+ef{eq:voltage_wave_gamma}) yields the final solution to the voltage and current waves along a transmission line of length $$l$$, depending only on $$l$$ and the parameters of the line $$R'$$, $$G'$$, $$L'$$, and $$C'$$.
 
 $$
-\begin{equation}
-\color{blue}{\tilde{V}(z)=(\frac{\tilde{V}_GZ_{in}}{Z_G+Z_{in}})(\frac{1}{e^{j\beta{}l}+\Gamma_Le^{-j\beta{}l}})(e^{-j\beta{}z}+\Gamma_L{}e^{j\beta{}z})}
+egin{equation}
 \label{eq:voltage_final_solution}
-\end{equation}
+nd{equation}
 $$
 
 $$
-\begin{equation}
-\color{blue}{\tilde{I}(z)=\frac{1}{Z_0}(\frac{\tilde{V}_GZ_{in}}{Z_G+Z_{in}})(\frac{1}{e^{j\beta{}l}+\Gamma_Le^{-j\beta{}l}})(e^{-j\beta{}z}+\Gamma_L{}e^{j\beta{}z})}
+egin{equation}
 \label{eq:current_final_solution}
-\end{equation}
-`,
-                    },
-                    {
-                        name: "writing-a-shell-01.md",
-                        data: `---
+nd{equation}
+`},
+{ name: "writing-a-shell-01.md",
+data: `---
 layout: page
 title: "Writing a Shell: 01 Lexing and Parsing"
 ---
@@ -624,7 +609,8 @@ struct Token {
         bar = '|',
         gt = '>',
         lt = '<',
-        newline = '\n',
+        newline = '
+',
         word
     };
 
@@ -668,7 +654,7 @@ The main method used by the parser will be \`next_token()\`. Each successive cal
 #include "lex.hpp"
 
 bool isop(char c) { return c == '&' || c == '|' || c == '>' || c == '<'; }
-bool isspace(char c) { return c == ' ' || c == '\t' || c == '\v'; }
+bool isspace(char c) { return c == ' ' || c == '	' || c == ''; }
 
 Token Lexer::to_start(char c) {
     stringstream out;
@@ -680,7 +666,8 @@ Token Lexer::to_start(char c) {
 
     if (c == '#') {
         return to_comment(c);
-    } else if (c == '\n' || isop(c)) {
+    } else if (c == '
+' || isop(c)) {
         return Token(in.get());
     } else if (c == EOF) {
         return to_eof();
@@ -690,13 +677,15 @@ Token Lexer::to_start(char c) {
 }
 
 Token Lexer::to_comment(char c) {
-    while ((c = in.get()) != '\n') {
+    while ((c = in.get()) != '
+') {
     }
     return Token(c);
 }
 
 Token Lexer::to_word(char c, stringstream &out) {
-    while (c != '\n' && !isspace(c) && !isop(c)) {
+    while (c != '
+' && !isspace(c) && !isop(c)) {
         if (c == EOF) {
             break;
         } else if (c == '\'' || c == '"') {
@@ -719,7 +708,8 @@ Token Lexer::to_quote(char c, stringstream &out) {
                            string(1, delim));
         } else {
             out << c;
-            if (c == '\n' && in_repl) {
+            if (c == '
+' && in_repl) {
                 cout << "quote> ";
             }
         }
@@ -1066,11 +1056,9 @@ world']
 }
 ajbond /home/ajbond/Documents/smash>
 \`\`\`
-`,
-                    },
-                    {
-                        name: "writing-a-shell-02.md",
-                        data: `---
+`},
+{ name: "writing-a-shell-02.md",
+data: `---
 layout: page
 title: "Writing a Shell: 02 Built In Commands and Input Files"
 ---
@@ -1383,11 +1371,9 @@ world']
     }
 }
 ❯
-`,
-                    },
-                    {
-                        name: "writing-a-shell-03.md",
-                        data: `---
+`},
+{ name: "writing-a-shell-03.md",
+data: `---
 layout: page
 title: "Writing a Shell: 03 Executing Commands"
 ---
@@ -1632,7 +1618,7 @@ void reap_jobs() {
                     to_string(errno) + ")");
             }
 
-            cout << "[" << i + 1 << "] " << directive->pid << " done\t"
+            cout << "[" << i + 1 << "] " << directive->pid << " done	"
                   << directive->full_name() << endl;
             delete directive;
             jobs.erase(jobs.begin() + i);
@@ -1665,13 +1651,10 @@ ajbond /Users/ajbond/Documents/smash> sleep 5 &
 ajbond /Users/ajbond/Documents/smash>
 [1] 12103 done  sleep 5
 ajbond /Users/ajbond/Documents/smash>
-`,
-                    },
-                ],
-            },
-            {
-                name: "about.md",
-                data: `---
+`},
+]},
+{ name: "about.md",
+data: `---
 layout: home
 title: About
 permalink: /about/
@@ -1679,16 +1662,11 @@ permalink: /about/
 
 <img src="/headshot2.png" alt="That's me." class="img-round img-large"/>
 
-I’m an electrical engineering student seeking to begin a career where hardware meets software. I’ve excelled in classes including Computer Architecture, Digital Design, Circuits, Statistics, Data Structures & Algorithms, Electromagnetics, and Systems Programming. I also have strong communication skills and an excellent academic record.
+Welcome! I’m Andrew Bond, an electrical engineering student seeking to leverage my skills in analog and digital circuits, programming, and problem solving to learn what it really means to be an electrical engineer. I'm an outstanding student with a 4.0 GPA, have strong written and interpersonal communication skills, and thrive in a team setting.
 
-Outside of school, I like to program in C, C++, Rust, and Go, and I'm working to deliver safe and reliable power to the AggieSat 6 nanosatellite, which will hopefully be launched in 2022. My portfolio contains details on these and other projects.
-
-I'm ready to apply my energy and intellect to challenging problems, learn as much as possible, and love every bit. Download my resume or get in touch with the links below.
-`,
-            },
-            {
-                name: "index.md",
-                data: `---
+`},
+{ name: "index.md",
+data: `---
 layout: jsh
 ---
 
@@ -1715,11 +1693,9 @@ layout: jsh
 <script src="src/snake.js" type="text/javascript"></script>
 </body>
 </html>
-`,
-            },
-            {
-                name: "notes.md",
-                data: `---
+`},
+{ name: "notes.md",
+data: `---
 layout: page
 title: Notes
 permalink: /notes/
@@ -1737,11 +1713,10 @@ permalink: /notes/
     </ul>
 
   {%- endif -%}
-`,
-            },
-            {
-                name: "portfolio.md",
-                data: `---
+</div>
+`},
+{ name: "portfolio.md",
+data: `---
 layout: page
 title: Portfolio
 permalink: /portfolio/
@@ -1750,11 +1725,10 @@ permalink: /portfolio/
 <div class="item" markdown="1">
 [AggieSat 6](https://aggiesat.tamu.edu):
 We're participating in the University NanoSatellite Program and aiming to launch our RF payload into space sometime in 2022. I'm on the EPS (Electrical Power System) team, designing circuits that will help power our satellite throughout its mission.
-<img src="/inhibit_pcb.png" alt="A PCB schematic I made for the AG6 inhibit scheme." title="A PCB schematic I made for the AG6 inhibit scheme." class="img-large"/>
 </div>
 
 <div class="item" markdown="1">
-<a href="/programming_assignment.pdf" download>Probability Project</a>
+<a href="/programming_assignment.pdf" download>Probability Simulation</a>
 As an extra-credit project in Random Signals and Systems, I developed a simulation in Python of a random experiment involving multiple Poisson and exponential random variables. After using the simulation to predict the mean and variance of the scenario, I proved it using the laws of probability. Use the link above to download the report.
 </div>
 
@@ -1777,11 +1751,9 @@ I was looking for a project to do in C++, and when I saw Rob Pike's <a href="htt
 [Fig](https://github.com/olishmollie/fig):
 The token Scheme implementation. I'm proud of this one because it's in C99 and I implemented a tracing garbage collector for it. I love the name, too. I wrote a Go port of it called GoFig. Yessssssss.
 </div>
-`,
-            },
-            {
-                name: "terminal.md",
-                data: `---
+`},
+{ name: "terminal.md",
+data: `---
 # Feel free to add content and custom Front Matter to this file.
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 ---
@@ -1800,15 +1772,12 @@ The token Scheme implementation. I'm proud of this one because it's in C99 and I
 
 <script src="src/filesystem.js" type="text/javascript"></script>
 <script src="src/shell.js" type="text/javascript"></script>
-`,
-            },
-            {
-                name: "src",
-                parent: "~",
-                files: [
-                    {
-                        name: "generate_filesystem.sh",
-                        data: `#! /usr/bin/env sh
+`},
+{ name: "src",
+parent: "~",
+files: [
+{ name: "generate_filesystem.sh",
+data: `#! /usr/bin/env sh
 
 ## Outputs the contents of certain files into a JSON 'filesystem' so users
 ## can read source files in the JavaScript 'shell'.
@@ -1855,11 +1824,9 @@ if command -v prettier > /dev/null; then
 fi
 
 rm -rf notes
-`,
-                    },
-                    {
-                        name: "main.css",
-                        data: `* {
+`},
+{ name: "main.css",
+data: `* {
     box-sizing: border-box;
 }
 
@@ -1896,9 +1863,11 @@ rm -rf notes
 }
 
 .item {
+    margin-bottom: 25px;
 }
 
 .item img {
+    float: right;
 }
 
 .img-round {
@@ -1921,11 +1890,9 @@ rm -rf notes
 .img-xsmall {
     width: 75px;
 }
-`,
-                    },
-                    {
-                        name: "shell.js",
-                        data: `var jshContainer = document.querySelector("#jshContainer");
+`},
+{ name: "shell.js",
+data: `var jshContainer = document.querySelector("#jshContainer");
 var jshTextArea = document.querySelector("#jshTextArea");
 var snakeCanvas = document.querySelector("#snakeCanvas");
 var pwd = "~";
@@ -1959,7 +1926,8 @@ function handleKeydown(e) {
     // Handle C-c
     else if (e.ctrlKey && e.keyCode === 67) {
         e.preventDefault();
-        this.value += "\n$ ";
+        this.value += "
+$ ";
         cursorPos = beginningOfLine();
     }
     // Handle C-l (clear screen)
@@ -2019,12 +1987,14 @@ function prompt() {
 }
 
 function currentLine() {
-    return (jshTextArea.value.match(/\n/g) || []).length;
+    return (jshTextArea.value.match(/
+/g) || []).length;
 }
 
 function beginningOfLine() {
     let pos;
-    if ((pos = jshTextArea.value.lastIndexOf("\n")) === -1) {
+    if ((pos = jshTextArea.value.lastIndexOf("
+")) === -1) {
         return prompt().length;
     }
     return pos + prompt().length + 1;
@@ -2039,10 +2009,13 @@ function atBeginningOfLine() {
 
 function output(str) {
     if (str.length > 0) {
-        jshTextArea.value += "\n" + str + "\n" + prompt();
+        jshTextArea.value += "
+" + str + "
+" + prompt();
         inputBuffer = "";
     } else {
-        jshTextArea.value += "\n" + prompt();
+        jshTextArea.value += "
+" + prompt();
     }
     jshTextArea.scrollTop = jshTextArea.scrollHeight;
     cursorPos = jshTextArea.selectionStart;
@@ -2057,6 +2030,7 @@ var validCommands = [
     "ls",
     "open",
     "snake",
+    "resume",
 ];
 
 function exec(input) {
@@ -2087,11 +2061,18 @@ function exec(input) {
             } else if (command === "snake") {
                 showSnake();
                 game.play();
+            } else if (command === "resume") {
+                window.location.href = "/Andy_Bond.pdf";
+                // showResume();
             }
         } else {
             output("command not found: " + command);
         }
     }
+}
+
+function showResume() {
+   window.open("Andy_Bond.pdf", '_blank').focus(); 
 }
 
 function findFile(filename, dir = fs) {
@@ -2157,7 +2138,9 @@ function clear() {
 
 function help() {
     let commandStr = "[" + validCommands.join(", ") + "]";
-    var helpStr = \`Commands: [\${validCommands.join(", ")}]\n\n\`;
+    var helpStr = \`Commands: [\${validCommands.join(", ")}]
+
+\`;
 
     helpStr += \`cat - Output a file to the terminal.
 cd - Change directories.
@@ -2242,7 +2225,9 @@ function hideSnake() {
 }
 
 var welcomeStr =
-    "Welcome! I'm Andy Bond, an embedded software engineer.\n\nType 'help' for available commands, 'exit' to enter the site, or 'snake' to waste some time."
+    "Welcome! I'm Andy Bond, an embedded software engineer.
+
+Type 'help' for available commands, 'resume' to view my resume, or 'snake' to waste some time."
 
 var introInterval;
 
@@ -2283,13 +2268,11 @@ window.onload = function () {
             init();
             output("");
         }
-    }, 50);
+    }, 15);
 };
-`,
-                    },
-                    {
-                        name: "snake.js",
-                        data: `Number.prototype.times = function (f) {
+`},
+{ name: "snake.js",
+data: `Number.prototype.times = function (f) {
     for (var i = 0; i < this; i++) {
         f();
     }
@@ -2641,10 +2624,6 @@ class Game {
         }
     }
 }
-`,
-                    },
-                ],
-            },
-        ],
-    },
-];
+`},
+]},
+]}];
